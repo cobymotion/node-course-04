@@ -40,25 +40,23 @@ class Tareas{
 
     listadoPendientesOrComplentadas(completadas = true){
         console.log();
-        let arrayFiltradas = []; 
-        if(completadas)
-            arrayFiltradas = this.arrysList.filter((tarea,index) => {
-                if(tarea.completadoEn)
-                    this.muestraTareas(tarea,index);
-                return tarea.completadoEn;
-            });
-        else 
-            arrayFiltradas = this.arrysList.filter((tarea,index) => {
-                if(tarea.completadoEn===null)
-                    this.muestraTareas(tarea,index);
-                return tarea.completadoEn===null;
-           });         
+        let cont = 0; 
+        this.arrysList.forEach((tarea) => {
+            if(completadas && tarea.completadoEn) 
+            {
+                this.muestraTareas(tarea,cont); 
+                cont +=1; 
+            } else if(!tarea.completadoEn && !completadas){
+                this.muestraTareas(tarea,cont); 
+                cont +=1;
+            }
+        });         
     }
 
     muestraTareas(tarea, index) {
         const idx = `${index + 1}`.blue; 
         const {desc, completadoEn} = tarea; 
-        const estado = (completadoEn)?'Completada'.green:'Pendiente'.red;        
+        const estado = (completadoEn)?`${completadoEn}`.green:'Pendiente'.red;        
         console.log(`${idx}. ${desc} :: ${estado}`);
     }
 
