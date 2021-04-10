@@ -34,13 +34,32 @@ class Tareas{
     }
 
     listadoCompleto(){
-        
-        this.arrysList.forEach( (tarea,index) => {
-            if(tarea.completadoEn)
-                console.log(`${index+1}. ${tarea.desc} :: ${'Completada'.green}`);
-            else 
-            console.log(`${index+1}. ${tarea.desc} :: ${'Pendiente'.red}`);
-        });
+        console.log();        
+        this.arrysList.forEach(this.muestraTareas);
+    }
+
+    listadoPendientesOrComplentadas(completadas = true){
+        console.log();
+        let arrayFiltradas = []; 
+        if(completadas)
+            arrayFiltradas = this.arrysList.filter((tarea,index) => {
+                if(tarea.completadoEn)
+                    this.muestraTareas(tarea,index);
+                return tarea.completadoEn;
+            });
+        else 
+            arrayFiltradas = this.arrysList.filter((tarea,index) => {
+                if(tarea.completadoEn===null)
+                    this.muestraTareas(tarea,index);
+                return tarea.completadoEn===null;
+           });         
+    }
+
+    muestraTareas(tarea, index) {
+        const idx = `${index + 1}`.blue; 
+        const {desc, completadoEn} = tarea; 
+        const estado = (completadoEn)?'Completada'.green:'Pendiente'.red;        
+        console.log(`${idx}. ${desc} :: ${estado}`);
     }
 
 }
